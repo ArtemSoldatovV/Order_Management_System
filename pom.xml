@@ -73,6 +73,8 @@
         </dependency>
 
         <!-- https://mavenlibs.com/maven/dependency/mysql/mysql-connector-java -->
+
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
