@@ -15,9 +15,9 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @ManyToOne
-//    @JoinColumn(name = "customer_id", nullable = false)
-//    private Customer customer;
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
@@ -27,7 +27,6 @@ public class Order {
     private List<Product> products;
 
     @Enumerated(EnumType.STRING)
-
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "creation_date", nullable = false)
     private LocalDate creationDate;
@@ -38,8 +37,11 @@ public class Order {
         this.creationDate = LocalDate.now(); // устанавливаем дату создания при создании заказа
     }
 
-    public void setId(Long orderId) {
-        this.id=orderId;
-    }
+    public void setId(Long orderId) {this.id=orderId;}
+    public void setCustomer(Customer customerId) {this.customer=customerId;}
+
+    public Long getID(){return this.id;}
+    public Customer getCustomer(){return this.customer;}
+
 
 }
