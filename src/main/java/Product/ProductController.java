@@ -21,14 +21,14 @@ public class ProductController  {
     }
 
     @GetMapping("/product/{productId}")
-    public ResponseEntity<Optional<Product>> getProductsByID(@PathVariable Long productId) {
-        Optional<Product> products = productService.findById(productId);
+    public ResponseEntity<List<ProductDTO>> getProductsByID(@PathVariable Long productId) {
+        List<ProductDTO> products = productService.findById(productId);
         return ResponseEntity.ok(products);
     }
 
     @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts(){
-        List<Product>products = productService.findAll();
+    public ResponseEntity<List<ProductDTO>> getAllProducts(){
+        List<ProductDTO>products = productService.findAll();
         return ResponseEntity.ok(products);
     }
     public String getMethodName(@RequestParam String param) {

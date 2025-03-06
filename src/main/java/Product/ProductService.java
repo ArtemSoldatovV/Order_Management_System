@@ -4,20 +4,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProductService {
+@Autowired
+private ProductRepository productRepository;
     @Autowired
-    private ProductRepository productRepository;
-
-    public List<Product> findAll() {
-        return productRepository.findAll();
+    private MappingUtils mp;
+    private Integer quantity=10;
+    public void deleverToWarehouse(List<ProductDTO>products){
+        products.forEach(product->product.setQuantity(quantity));
+    }
+    public List<ProductDTO> findAll() {
+        return productRepository.findAll().stream().map(mp::mapToProductDTO).collect(Collectors.toList());
     }
 
-    public Optional<Product> findById(Long id) {
-        return productRepository.findById(id);
+    public List<ProductDTO> findById(Long id) {
+        return productRepository.findById(id).stream().map(mp::mapToProductDTO).collect(Collectors.toList());
     }
 
     public Product save(Product product) {
@@ -33,7 +39,7 @@ public class ProductService {
             return productRepository.save(product);
         }
         else{
-            throw new RuntimeException("Product.Product not found!");
+            throw new RuntimeException("Product not found!");
         }
     }
 

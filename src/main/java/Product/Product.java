@@ -16,6 +16,8 @@ public class Product {
 
     @ManyToMany(mappedBy = "products")
     private List<Order> orders;
+
+
     public void setID(Long id){
         this.id=id;
     }
