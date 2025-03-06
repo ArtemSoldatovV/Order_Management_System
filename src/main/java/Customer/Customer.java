@@ -21,11 +21,18 @@ public class Customer {
     //тут реализовано множество заказов к одному клиенту
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Order> orders;
+
     public void setId(Long id){
         this.id=id;
     }
-
     public void setName(String name){
         this.name=name;
+    }
+
+    public long getId(){
+        return this.id;
+    }
+    public String getName(){
+         return this.name;
     }
 }
