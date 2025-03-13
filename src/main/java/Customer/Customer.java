@@ -5,34 +5,54 @@ import jakarta.persistence.*;
 import java.util.List;
 
 import Order.Order;
-
+import lombok.Data;
 //класс Клиент
 
 @Entity
 @Table(name = "customers")
+@Data
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @SuppressWarnings("unused")
+    @Column(name = "name")  // Добавлено для определения соответствия с колонкой в БД
     private String name;
 
-    //тут реализовано множество заказов к одному клиенту
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<Order> orders;
+    // здесь реализовано множество заказов к одному клиенту
+//    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+//    private List<Order> orders;
 
-    public void setId(Long id){
+    // Конструктор без параметров
+    public Customer() {}
+
+    public Customer(Long id,String name) {
         this.id=id;
-    }
-    public void setName(String name){
         this.name=name;
     }
 
-    public long getId(){
+    // Геттеры и сеттеры
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getId() { // Изменён тип возвращаемого значения на Long
         return this.id;
     }
-    public String getName(){
-         return this.name;
+
+    public String getName() {
+        return this.name;
     }
+
+//    public List<Order> getOrders() {
+//        return orders;
+//    }
+//
+//    public void setOrders(List<Order> orders) {
+//        this.orders = orders;
+//    }
 }

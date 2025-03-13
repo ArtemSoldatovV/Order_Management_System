@@ -2,41 +2,31 @@ package Order;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 import Customer.Customer;
+import Product.Product;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 public class OrderDTO {
+
     @NotNull(message = "Id не может быть пустым")
-    private Long Id;
+    private Long id; // изменено Id на id
 
-    @NotNull(message = "customerId не может быть пустым")
-    private Customer customerId;
+    @NotNull(message = "Customer ID не может быть пустым")
+    private Long customerId; // изменено с Customer на Long
 
-    @NotEmpty(message = "Список productId не может быть пустым")
-    private List<Long> productId;
+//    @NotEmpty(message = "Список productId не может быть пустым")
+//    private List<Product> productId;
 
+    private Integer quantity; // добавлено поле quantity
 
-    public void setId(Long orderId) {
-        this.Id=orderId;
-    }
-
-    public void setCustomer(Customer customerId) {
-        this.customerId=customerId;
-    }
-    public Long getId(){return this.Id;}
-    public Customer getCustomer(){return this.customerId;}
-
-    public void setQuantity(Integer quantity) {//решение от IntelliJ IDEA
-    }
+    // Убраны кастомные геттеры и сеттеры для id и customerId
 }
 //enum OrderStatus {//решение от IntelliJ IDEA
 //    DELIVERED,

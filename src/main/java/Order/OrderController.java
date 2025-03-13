@@ -1,5 +1,6 @@
 package Order;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,10 +12,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/orders")
 public class OrderController {
+
     @Autowired
     private OrderService orderService;
+
     @PostMapping
-    public ResponseEntity<OrderDTO> createOrder(@RequestBody OrderDTO order) {
+    public ResponseEntity<OrderDTO> createOrder(@RequestBody @Valid OrderDTO order) {
         OrderDTO newOrder = orderService.createOrder(order);
         return ResponseEntity.ok(newOrder);
     }
@@ -25,18 +28,20 @@ public class OrderController {
         return ResponseEntity.ok(orders);
     }
 
-    @GetMapping
-    public ResponseEntity<List<OrderDTO>> filterOrders(@RequestParam(required = false) String status) {
-        List<OrderDTO> orders = status != null ?  orderService.findByStatus(status) : orderService.getAllOrders();
+    @GetMapping("/filter")
+    public ResponseEntity<List<OrderDTO>> filterOrders(
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) LocalDate date) {
+        List<OrderDTO> orders;
+        if (status != null) {
+            orders = orderService.findByStatus(status);
+        } else if (date != null) {
+            orders = orderService.findByDate(date);
+        } else {
+            orders = orderService.getAllOrders();
+        }
         return ResponseEntity.ok(orders);
     }
-
-    @GetMapping
-    public ResponseEntity<List<OrderDTO>> filterOrders(@RequestParam(required = false) LocalDate date) {
-        List<OrderDTO>orders = date != null? orderService.findByDate(date):orderService.getAllOrders();
-        return ResponseEntity.ok(orders);
-    }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
@@ -45,12 +50,13 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<OrderDTO> updateOrder(@PathVariable Long id, @RequestBody OrderDTO order) {
+    public ResponseEntity<OrderDTO> updateOrder(@PathVariable Long id, @RequestBody @Valid OrderDTO order) {
         OrderDTO updatedOrder = orderService.updateOrder(id, order);
         return ResponseEntity.ok(updatedOrder);
     }
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<String> handleRuntimeException(RuntimeException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-    }
+
+//    @ExceptionHandler(RuntimeException.class)
+//    public ResponseEntity<String> handleRuntimeException(RuntimeException e) {
+//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+//    }
 }

@@ -1,5 +1,6 @@
 package Product;
 
+import MappingUtils.MappingUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -10,37 +11,41 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProductService {
-@Autowired
-private ProductRepository productRepository;
+
+    private final ProductRepository productRepository;
+    private final MappingUtils mp;
+    private Integer quantity = 10;
+
     @Autowired
-    private MappingUtils mp;
-    private Integer quantity=10;
-    public void deleverToWarehouse(List<ProductDTO>products){
-        products.forEach(product->product.setQuantity(quantity));
-    }
-    public List<ProductDTO> findAll() {
-        return productRepository.findAll().stream().map(mp::mapToProductDTO).collect(Collectors.toList());
+    public ProductService(ProductRepository productRepository, MappingUtils mp) {
+        this.productRepository = productRepository;
+        this.mp = mp;
     }
 
-    public List<ProductDTO> findById(Long id) {
-        return productRepository.findById(id).stream().map(mp::mapToProductDTO).collect(Collectors.toList());
+    public Optional<ProductDTO> findById(Long id) {
+        return productRepository.findById(id)
+                .map(mp::mapToProductDTO);
+    }
+
+    public List<ProductDTO> findAll() {
+        return productRepository.findAll().stream()
+                .map(mp::mapToProductDTO)
+                .collect(Collectors.toList());
     }
 
     public Product save(Product product) {
+        // Добавьте проверку валидности здесь
         return productRepository.save(product);
     }
 
     public Product update(Long id, Product productDetails) {
         Optional<Product> optionalProduct = productRepository.findById(id);
-        if (optionalProduct.isPresent()) {
+
             Product product = optionalProduct.get();
             product.setName(productDetails.getName());
             product.setPrice(productDetails.getPrice());
             return productRepository.save(product);
-        }
-        else{
-            throw new RuntimeException("Product not found!");
-        }
+
     }
 
     public void delete(Long id) {

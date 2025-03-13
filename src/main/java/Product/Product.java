@@ -4,36 +4,64 @@ import java.util.List;
 
 import Order.Order;
 import jakarta.persistence.*;
+import lombok.Data;
 //Продукты
 @Entity
 @Table(name = "products")
+@Data
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private String name;
+
     private Double price;
 
-    @ManyToMany(mappedBy = "products")
-    private List<Order> orders;
+//    @ManyToMany(mappedBy = "products")
+//    private List<Order> orders;
 
+    // Конструктор по умолчанию
+    public Product() {
+    }
 
-    public void setID(Long id){
-        this.id=id;
+    // Конструктор с параметрами
+    public Product(String name, Double price) {
+        this.name = name;
+        this.price = price;
     }
-    public void setName(String name){
-        this.name=name;
+
+    // Геттеры и сеттеры
+    public void setId(Long id) {
+        this.id = id;
     }
-    public void setPrice(Double price){
-        this.price=price;
+
+    public void setName(String name) {
+        this.name = name;
     }
-    public Long getID(){
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Long getId() {
         return this.id;
     }
-    public String getName(){
+
+    public String getName() {
         return this.name;
     }
-    public Double getPrice(){
+
+    public Double getPrice() {
         return this.price;
     }
+
+    // Геттеры и сеттеры для списка orders
+//    public List<Order> getOrders() {
+//        return orders;
+//    }
+//
+//    public void setOrders(List<Order> orders) {
+//        this.orders = orders;
+//    }
 }

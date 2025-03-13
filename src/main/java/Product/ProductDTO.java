@@ -1,22 +1,21 @@
 package Product;
 
-import Customer.Customer;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+
+import Order.Order;
 import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 public class ProductDTO {
-    @NotNull(message = "Id не может быть пустым")
-    private Long Id;
+    @NotNull(message = "id не может быть пустым")
+    private Long id;
 
     @NotNull(message = "name не может быть пустым")
     private String name;
@@ -24,9 +23,7 @@ public class ProductDTO {
     @NotNull(message = "price не может быть пустым")
     private Double price;
 
-    @NotEmpty(message = "Список ordersid не может быть пустым")
-    private List<Long> ordersid;
-
-    public void setQuantity(Integer quantity) {
-    }
+//    @NotNull(message = "Список orderIds не может быть null")
+//    @NotEmpty(message = "Список orderIds не может быть пустым")
+//    private List<Order> orderIds; // Переименовано для лучшей читаемости
 }

@@ -1,38 +1,36 @@
 package Product;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/products")
-public class ProductController  {
+public class ProductController {
     @Autowired
     private ProductService productService;
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+    public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product) {
         Product newProduct = productService.save(product);
-        return ResponseEntity.ok(newProduct);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newProduct);
     }
 
-    @GetMapping("/product/{productId}")
-    public ResponseEntity<List<ProductDTO>> getProductsByID(@PathVariable Long productId) {
-        List<ProductDTO> products = productService.findById(productId);
-        return ResponseEntity.ok(products);
+    @GetMapping("/{productId}")
+    public ResponseEntity<ProductDTO> getProductById(@PathVariable Long productId) {
+        return productService.findById(productId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductDTO>> getAllProducts(){
-        List<ProductDTO>products = productService.findAll();
+    public ResponseEntity<List<ProductDTO>> getAllProducts() {
+        List<ProductDTO> products = productService.findAll();
         return ResponseEntity.ok(products);
-    }
-    public String getMethodName(@RequestParam String param) {
-        return new String();
     }
 
     @DeleteMapping("/{id}")
@@ -46,8 +44,5 @@ public class ProductController  {
         Product updatedProduct = productService.update(id, product);
         return ResponseEntity.ok(updatedProduct);
     }
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<String> handleRuntimeException(RuntimeException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-    }
+
 }
