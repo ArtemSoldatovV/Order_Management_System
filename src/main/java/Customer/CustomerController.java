@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 //работа веб сервером 
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/api/customer")
 public class CustomerController {
 
     @Autowired
@@ -20,7 +20,7 @@ public class CustomerController {
         return customerService.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{customerId}")
     public ResponseEntity<Customer> getCustomerById(@PathVariable Long id) {
         Customer customer = customerService.findById(id);
         return customer != null ? ResponseEntity.ok(customer) : ResponseEntity.notFound().build();
@@ -32,7 +32,7 @@ public class CustomerController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCustomer);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{customerId}")
     public ResponseEntity<Customer> updateCustomer(@PathVariable Long id, @Valid @RequestBody Customer updatedCustomer) {
         try {
             return ResponseEntity.ok(customerService.updateCustomer(updatedCustomer.getName(), id, updatedCustomer));
@@ -41,7 +41,7 @@ public class CustomerController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/customer/{customerId}")
     public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
         try {
             customerService.deleteCustomer(id);

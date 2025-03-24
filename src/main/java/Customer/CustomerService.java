@@ -22,6 +22,16 @@ public class CustomerService {
     @Autowired
     private MappingUtils mappingUtils;
 
+    public List<CustomerDTO> findAll() {
+        return customerRepository.findAll().stream()
+                .map(mappingUtils::mapToCustomerDTO)
+                .collect(Collectors.toList());
+    }
+
+    public Customer findById(Long id) {
+        return customerRepository.findById(id).orElse(null);
+    }
+
     public void makeCustomer(List<CustomerDTO> customers) {
         if (customers == null) {
             customers = new ArrayList<>();
@@ -30,30 +40,15 @@ public class CustomerService {
         customers.forEach(customer -> {
             Long generatedId = generateUniqueId(); // Замените на метод, генерирующий уникальный идентификатор
             String name = "Bob";  // Возможно, следует передавать как параметр
-            List<Order> orders ; // Возможно, следует передавать как параметр
+            List<Order> orders = List.of(); // Возможно, следует передавать как параметр
 
             customer.setId(generatedId);
             customer.setName(name);
-//            customer.setOrdersid(orders);
+            customer.setOrdersid(orders);
         });
         // save to repository if needed
     }
 
-    public List<CustomerDTO> findAll() {
-        return customerRepository.findAll().stream()
-                .map(mappingUtils::mapToCustomerDTO)
-                .collect(Collectors.toList());
-    }
-//    public String findAll(String s) {
-//        Iterable<Customer> customer=customerRepository.findAll();
-//        model.addAttributee();
-//        return
-//    }
-
-
-    public Customer findById(Long id) {
-        return customerRepository.findById(id).orElse(null);
-    }
 
     @Transactional
     public Customer addCustomer(Customer customer) {

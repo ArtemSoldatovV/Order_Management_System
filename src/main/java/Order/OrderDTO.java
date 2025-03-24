@@ -21,8 +21,8 @@ public class OrderDTO {
     @NotNull(message = "Customer ID не может быть пустым")
     private Long customerId; // изменено с Customer на Long
 
-//    @NotEmpty(message = "Список productId не может быть пустым")
-//    private List<Product> productId;
+    @NotEmpty(message = "Список productId не может быть пустым")
+    private List<Product> productId;
 
     private Integer quantity; // добавлено поле quantity
 

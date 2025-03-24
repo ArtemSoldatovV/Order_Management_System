@@ -20,9 +20,9 @@ public class CustomerDTO {
     @NotNull(message = "Имя (name) не может быть пустым")
     private String name;
 
-//    @NotNull(message = "Список (ordersid) не может быть пустым") // Добавлено для проверки на null
-//    @NotEmpty(message = "Список ordersid не может быть пустым")
-//    private List<Order> ordersid;
+    @NotNull(message = "Список (ordersid) не может быть пустым") // Добавлено для проверки на null
+    @NotEmpty(message = "Список ordersid не может быть пустым")
+    private List<Order> ordersid;
 
     // Удалены геттеры и сеттеры, так как они генерируются Lombok
 

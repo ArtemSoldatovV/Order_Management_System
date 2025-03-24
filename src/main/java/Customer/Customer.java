@@ -10,7 +10,6 @@ import lombok.Data;
 
 @Entity
 @Table(name = "customers")
-@Data
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,9 +18,9 @@ public class Customer {
     @Column(name = "name")  // Добавлено для определения соответствия с колонкой в БД
     private String name;
 
-    // здесь реализовано множество заказов к одному клиенту
-//    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-//    private List<Order> orders;
+    //// здесь реализовано множество заказов к одному клиенту
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<Order> orders;
 
     // Конструктор без параметров
     public Customer() {}
@@ -48,11 +47,11 @@ public class Customer {
         return this.name;
     }
 
-//    public List<Order> getOrders() {
-//        return orders;
-//    }
-//
-//    public void setOrders(List<Order> orders) {
-//        this.orders = orders;
-//    }
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
 }

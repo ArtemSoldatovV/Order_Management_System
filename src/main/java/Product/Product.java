@@ -8,18 +8,19 @@ import lombok.Data;
 //Продукты
 @Entity
 @Table(name = "products")
-@Data
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "name")
     private String name;
 
+    @Column(name = "price")
     private Double price;
 
-//    @ManyToMany(mappedBy = "products")
-//    private List<Order> orders;
+    @ManyToMany(mappedBy = "products")
+    private List<Order> orders;
 
     // Конструктор по умолчанию
     public Product() {
@@ -57,11 +58,11 @@ public class Product {
     }
 
     // Геттеры и сеттеры для списка orders
-//    public List<Order> getOrders() {
-//        return orders;
-//    }
-//
-//    public void setOrders(List<Order> orders) {
-//        this.orders = orders;
-//    }
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
 }

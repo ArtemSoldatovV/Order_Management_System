@@ -61,24 +61,27 @@ public class OrderService {
     }
 
     public void deleteOrder(Long orderId) {
-
             orderRepository.deleteById(orderId);
-
     }
 
     public List<OrderDTO> findByStatus(String status) {
+        //return mappingUtils.mapToOrderDTO(orderRepository.findByStatus(status));
         return orderRepository.findByStatus(status).stream()
                 .map(mappingUtils::mapToOrderDTO)
                 .collect(Collectors.toList());
     }
 
     public List<OrderDTO> findByDate(LocalDate date) {
+        //return orderRepository.findByDate(date);
         return orderRepository.findByDate(date).stream()
                 .map(mappingUtils::mapToOrderDTO)
                 .collect(Collectors.toList());
     }
-
     public List<OrderDTO> getAllOrders() {
-        return findAll();
+        //return orderRepository.findAll();
+        return orderRepository.findAll().stream()
+                .map(mappingUtils::mapToOrderDTO)
+                .collect(Collectors.toList());
     }
+
 }

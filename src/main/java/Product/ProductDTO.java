@@ -23,7 +23,7 @@ public class ProductDTO {
     @NotNull(message = "price не может быть пустым")
     private Double price;
 
-//    @NotNull(message = "Список orderIds не может быть null")
-//    @NotEmpty(message = "Список orderIds не может быть пустым")
-//    private List<Order> orderIds; // Переименовано для лучшей читаемости
+    @NotNull(message = "Список orderIds не может быть null")
+    @NotEmpty(message = "Список orderIds не может быть пустым")
+    private List<Order> orderIds; // Переименовано для лучшей читаемости
 }

@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    
     private final MappingUtils mp;
-    private Integer quantity = 10;
 
     @Autowired
     public ProductService(ProductRepository productRepository, MappingUtils mp) {
