@@ -6,8 +6,8 @@ import Order.Order;
 import Customer.Customer;
 import Product.Product;
 import Product.ProductDTO;
-import User.User;
-import User.UserDTO;
+import Client.Client;
+import Client.ClientDTO;
 import org.springframework.stereotype.Service;
 
 
@@ -49,27 +49,25 @@ public class MappingUtils {
         order.setId(oDTO.getId());
         return order;
     }
-    public UserDTO mapToUserDTO(User user){
-        UserDTO userDTO = new UserDTO();
+    public ClientDTO mapToUserDTO(Client user){
+        ClientDTO userDTO = new ClientDTO();
         userDTO.setId(user.getId());
         userDTO.setName(user.getName());
         userDTO.setSurname(user.getSurname());
         userDTO.setPatronymic(user.getPatronymic());
         userDTO.setPassword(user.getPassword());
         userDTO.setEmail(user.getEmail());
-        userDTO.setPost(user.getPost());
         userDTO.setRegistration_date(user.getRegistration_date());
         return userDTO;
     }
-    public User mapToUser(UserDTO userDTO){
-        User user = new User();
+    public Client mapToUser(ClientDTO userDTO){
+        Client user = new Client();
         user.setId(userDTO.getId());
         user.setName(userDTO.getName());
         user.setSurname(userDTO.getSurname());
         user.setPatronymic(userDTO.getPatronymic());
         user.setPassword(userDTO.getPassword());
         user.setEmail(userDTO.getEmail());
-        user.setPost(userDTO.getPost());
         user.setRegistration_date(userDTO.getRegistration_date());
         return user;
     }

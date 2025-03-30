@@ -1,6 +1,6 @@
 package Excel;
 
-import User.UserService;
+import Client.*;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,20 +13,18 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import User.*;
-
 @RestController
 public class UserExportController {
 
-    private final UserService userService; // Сервис для получения списка клиентов
+    private final ClientService userService; // Сервис для получения списка клиентов
 
-    public UserExportController(UserService userService) {
+    public UserExportController(ClientService userService) {
         this.userService = userService;
     }
 
     @GetMapping("/api/clients/export")
     public ResponseEntity<byte[]> exportClientsToExcel() throws IOException {
-        List<User> clients = userService.getAllClients(); // Получаем список клиентов
+        List<Client> clients = userService.getAllClients(); // Получаем список клиентов
 
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Список клиентов");
@@ -53,7 +51,7 @@ public class UserExportController {
         // Заполняем данными
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         for (int i = 0; i < clients.size(); i++) {
-            User user = clients.get(i);
+            Client user = clients.get(i);
             Row row = sheet.createRow(i + 1);
             row.createCell(0).setCellValue(user.getId());
             row.createCell(1).setCellValue(user.getFullName());
